@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTML PDF Modifier</title>
+<meta name="description" content="Professional PDF editing in the browser: text, images, shapes, form fields and page layout, in every writing system. Nothing is uploaded.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<!-- ─────────────────────────── icon sprite ─────────────────────────── -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <symbol id="i-open" viewBox="0 0 24 24"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2.5h7A1.5 1.5 0 0 1 19 10v7.5A1.5 1.5 0 0 1 17.5 19h-13A1.5 1.5 0 0 1 3 17.5z"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 4h10l4 4v12H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></symbol>
+    <symbol id="i-export" viewBox="0 0 24 24"><path d="M12 15V4m0 0L8 8m4-4 4 4"/><path d="M4 15v3.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V15"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 8H5V4"/><path d="M5 8a8 8 0 1 1 1.6 9.3"/></symbol>
+    <symbol id="i-redo" viewBox="0 0 24 24"><path d="M15 8h4V4"/><path d="M19 8a8 8 0 1 0-1.6 9.3"/></symbol>
+    <symbol id="i-zoom-in" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.4-4.4M11 8.5v5M8.5 11h5"/></symbol>
+    <symbol id="i-zoom-out" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.4-4.4M8.5 11h5"/></symbol>
+    <symbol id="i-fit-width" viewBox="0 0 24 24"><path d="M3 5v14M21 5v14M7 12h10M7 12l3-3M7 12l3 3M17 12l-3-3M17 12l-3 3"/></symbol>
+    <symbol id="i-fit-page" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="1"/><path d="M2.5 7v10M21.5 7v10"/></symbol>
+    <symbol id="i-cursor" viewBox="0 0 24 24"><path d="M6 3.5l12.5 8-5.2 1.2 2.4 6-2.6 1-2.4-6-3.7 3.7z"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M5 6V4.5h14V6M12 4.5V20M9 20h6"/></symbol>
+    <symbol id="i-rect" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1"/></symbol>
+    <symbol id="i-ellipse" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8" ry="6"/></symbol>
+    <symbol id="i-line" viewBox="0 0 24 24"><path d="M5 19L19 5"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.5"/><circle cx="8.5" cy="10" r="1.6"/><path d="M4 17l5-4.5 4 3.5 3-2.5 4 3.5"/></symbol>
+    <symbol id="i-redact" viewBox="0 0 24 24"><rect x="3.5" y="7" width="17" height="10" rx="1"/><path d="M7 11h10M7 14h6"/></symbol>
+    <symbol id="i-form-text" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1.5" stroke-dasharray="3 2.5"/><path d="M6.5 12h11"/></symbol>
+    <symbol id="i-checkbox" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M7.5 12.5l3 3 6-7"/></symbol>
+    <symbol id="i-radio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-dropdown" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="1.5"/><path d="M15 12l2 2 2-2"/></symbol>
+    <symbol id="i-pages" viewBox="0 0 24 24"><rect x="7" y="3" width="12" height="16" rx="1.5"/><path d="M4.5 6.5v12a2 2 0 0 0 2 2h9"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 4.5-9 4.5-9-4.5z"/><path d="M3 12.5l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/></symbol>
+    <symbol id="i-font" viewBox="0 0 24 24"><path d="M4 19l6-14h2l6 14M7 13.5h8"/><path d="M16.5 5.5H21"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.2 2.4c-.5.2-.7.6-.7 1.1v.6"/><circle cx="12" cy="16.6" r=".9" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4.5V10H9"/><path d="M12 8v4.5l3 1.8"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 6.5h15M9.5 6.5V4.5h5v2M6.5 6.5l1 13h9l1-13"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M15 6.5V5.5A1.5 1.5 0 0 0 13.5 4h-8A1.5 1.5 0 0 0 4 5.5v8A1.5 1.5 0 0 0 5.5 15h1"/></symbol>
+    <symbol id="i-paste" viewBox="0 0 24 24"><path d="M9 4.5h6v2H9z"/><path d="M15 5.5h2A1.5 1.5 0 0 1 18.5 7v12a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19V7A1.5 1.5 0 0 1 7 5.5h2"/></symbol>
+    <symbol id="i-duplicate" viewBox="0 0 24 24"><rect x="4" y="4" width="11" height="11" rx="1.5"/><path d="M9 20h9.5A1.5 1.5 0 0 0 20 18.5V9"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="10" rx="1.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/></symbol>
+    <symbol id="i-unlock" viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="10" rx="1.5"/><path d="M8 10V7.5a4 4 0 0 1 7.5-2"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 6 12 6s9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="2.6"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M4 4l16 16"/><path d="M9.5 6.4A9.6 9.6 0 0 1 12 6c6 0 9.5 6 9.5 6a17 17 0 0 1-3.3 3.7M6.5 8A17 17 0 0 0 2.5 12s3.5 6 9.5 6a9.4 9.4 0 0 0 3-.5"/></symbol>
+    <symbol id="i-rotate-left" viewBox="0 0 24 24"><path d="M4 9a8 8 0 1 1 .6 5"/><path d="M3.5 4v5H8.5"/></symbol>
+    <symbol id="i-rotate-right" viewBox="0 0 24 24"><path d="M20 9a8 8 0 1 0-.6 5"/><path d="M20.5 4v5h-5"/></symbol>
+    <symbol id="i-flatten" viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="17" rx="1.5"/><path d="M8 8.5h8M8 12h8M8 15.5h5"/></symbol>
+    <symbol id="i-align-left" viewBox="0 0 24 24"><path d="M4 3.5v17"/><rect x="7" y="6" width="12" height="4" rx="1"/><rect x="7" y="14" width="8" height="4" rx="1"/></symbol>
+    <symbol id="i-align-center-h" viewBox="0 0 24 24"><path d="M12 3.5v17"/><rect x="5" y="6" width="14" height="4" rx="1"/><rect x="8" y="14" width="8" height="4" rx="1"/></symbol>
+    <symbol id="i-align-right" viewBox="0 0 24 24"><path d="M20 3.5v17"/><rect x="5" y="6" width="12" height="4" rx="1"/><rect x="9" y="14" width="8" height="4" rx="1"/></symbol>
+    <symbol id="i-align-top" viewBox="0 0 24 24"><path d="M3.5 4h17"/><rect x="6" y="7" width="4" height="12" rx="1"/><rect x="14" y="7" width="4" height="8" rx="1"/></symbol>
+    <symbol id="i-align-middle" viewBox="0 0 24 24"><path d="M3.5 12h17"/><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="8" width="4" height="8" rx="1"/></symbol>
+    <symbol id="i-align-bottom" viewBox="0 0 24 24"><path d="M3.5 20h17"/><rect x="6" y="5" width="4" height="12" rx="1"/><rect x="14" y="9" width="4" height="8" rx="1"/></symbol>
+    <symbol id="i-distribute-h" viewBox="0 0 24 24"><path d="M4 3.5v17M20 3.5v17"/><rect x="10" y="6" width="4" height="12" rx="1"/></symbol>
+    <symbol id="i-distribute-v" viewBox="0 0 24 24"><path d="M3.5 4h17M3.5 20h17"/><rect x="6" y="10" width="12" height="4" rx="1"/></symbol>
+    <symbol id="i-front" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="12" height="12" rx="1.5"/><path d="M8.5 20.5h12v-12"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="12" height="12" rx="1.5"/><path d="M15.5 3.5h-12v12"/></symbol>
+    <symbol id="i-forward" viewBox="0 0 24 24"><rect x="7.5" y="7.5" width="13" height="13" rx="1.5"/><path d="M16.5 3.5h-13v13"/></symbol>
+    <symbol id="i-backward" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="13" height="13" rx="1.5"/><path d="M7.5 20.5h13v-13"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V4h10v5"/><rect x="3.5" y="9" width="17" height="7" rx="1.5"/><path d="M7 14h10v6H7z"/></symbol>
+    <symbol id="i-properties" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4.5l8.5 15h-17z"/><path d="M12 10v4"/><circle cx="12" cy="16.6" r=".9" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.8" r=".9" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5a4 4 0 0 0 5.7 0l2.6-2.6a4 4 0 0 0-5.7-5.7l-1.3 1.3"/><path d="M14 10.5a4 4 0 0 0-5.7 0l-2.6 2.6a4 4 0 0 0 5.7 5.7l1.3-1.3"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 14.5a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.2a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.2a1.6 1.6 0 0 0-1.4 1z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+    <symbol id="i-select-all" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5" stroke-dasharray="3 2.5"/><path d="M8.5 12.2l2.4 2.4 4.6-5.4"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4l2 2.5h7A1.5 1.5 0 0 1 19 9v8.5A1.5 1.5 0 0 1 17.5 19h-13A1.5 1.5 0 0 1 3 17.5z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5S14.4 18.2 12 20.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V5m0 0L8 9m4-4 4 4"/><path d="M4 17v2.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V17"/></symbol>
+  </defs>
+</svg>
+
+<div id="app">
+
+  <!-- ─────────────────────────── top bar ─────────────────────────── -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-pages"/></svg>
+      </span>
+      <span class="brand-text">
+        <strong class="brand-name" data-i18n="appName">HTML PDF Modifier</strong>
+        <span class="brand-doc" id="doc-name"></span>
+      </span>
+    </div>
+
+    <div class="bar-group">
+      <button class="btn" data-action="open"><svg class="icon" viewBox="0 0 24 24"><use href="#i-open"/></svg><span data-i18n="open">Open PDF</span></button>
+      <button class="btn" data-action="open-url" title="openUrl"><svg class="icon" viewBox="0 0 24 24"><use href="#i-link"/></svg></button>
+      <button class="btn" data-action="open-project" title="load"><svg class="icon" viewBox="0 0 24 24"><use href="#i-folder"/></svg></button>
+      <button class="btn" data-action="save-project" title="save"><svg class="icon" viewBox="0 0 24 24"><use href="#i-save"/></svg></button>
+      <button class="btn primary" data-action="download"><svg class="icon" viewBox="0 0 24 24"><use href="#i-export"/></svg><span data-i18n="download">Save PDF</span></button>
+    </div>
+
+    <div class="bar-group" id="tools">
+      <button class="btn tool active" data-tool="select" data-i18n-title="tool.select" title="Select (V)">
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-cursor"/></svg><span data-i18n="tool.select">Select</span></button>
+      <button class="btn tool" data-tool="text" data-i18n-title="tool.text" title="Text (T)">
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-text"/></svg><span data-i18n="tool.text">Text</span></button>
+      <button class="btn tool" data-tool="rect" data-i18n-title="tool.rect" title="Rectangle (R)">
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-rect"/></svg></button>
+      <button class="btn tool" data-tool="ellipse" data-i18n-title="tool.ellipse" title="Ellipse (O)">
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-ellipse"/></svg></button>
+      <button class="btn tool" data-tool="line" data-i18n-title="tool.line" title="Line (L)">
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-line"/></svg></button>
+      <button class="btn tool" data-tool="image" data-i18n-title="tool.image" title="Image (I)">
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-image"/></svg></button>
+      <button class="btn tool" data-tool="redact" data-i18n-title="tool.redact" title="Redact (B)">
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-redact"/></svg></button>
+      <span class="bar-sep"></span>
+      <button class="btn tool" data-tool="form-text" data-i18n-title="tool.formText" title="Text field (F)">
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-form-text"/></svg></button>
+      <button class="btn tool" data-tool="checkbox" data-i18n-title="tool.checkbox" title="Checkbox (C)">
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-checkbox"/></svg></button>
+      <button class="btn tool" data-tool="radio" data-i18n-title="tool.radio" title="Radio (R2)">
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-radio"/></svg></button>
+      <button class="btn tool" data-tool="dropdown" data-i18n-title="tool.dropdown" title="Dropdown (D)">
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-dropdown"/></svg></button>
+    </div>
+
+    <div class="bar-group">
+      <button class="btn icon" data-action="undo" data-i18n-title="undo" title="Undo"><svg class="icon" viewBox="0 0 24 24"><use href="#i-undo"/></svg></button>
+      <button class="btn icon" data-action="redo" data-i18n-title="redo" title="Redo"><svg class="icon" viewBox="0 0 24 24"><use href="#i-redo"/></svg></button>
+    </div>
+
+    <div class="bar-group zoom-group">
+      <button class="btn icon" data-action="zoom-out" title="zoomOut"><svg class="icon" viewBox="0 0 24 24"><use href="#i-zoom-out"/></svg></button>
+      <input type="range" id="zoom-slider" class="zoom-slider" min="10" max="400" step="5" value="100" aria-label="zoom">
+      <button class="btn icon" data-action="zoom-in" title="zoomIn"><svg class="icon" viewBox="0 0 24 24"><use href="#i-zoom-in"/></svg></button>
+      <button class="btn icon" data-action="fit-width" title="fitWidth"><svg class="icon" viewBox="0 0 24 24"><use href="#i-fit-width"/></svg></button>
+      <button class="btn icon" data-action="fit-page" title="fitPage"><svg class="icon" viewBox="0 0 24 24"><use href="#i-fit-page"/></svg></button>
+      <span class="zoom-label" id="zoom-label">100%</span>
+    </div>
+
+    <div class="bar-group right">
+      <button class="btn icon" data-action="print" title="print"><svg class="icon" viewBox="0 0 24 24"><use href="#i-print"/></svg></button>
+      <button class="btn icon" data-action="properties" title="props.title"><svg class="icon" viewBox="0 0 24 24"><use href="#i-properties"/></svg></button>
+      <button class="btn icon" data-action="shortcuts" title="shortcuts.title"><svg class="icon" viewBox="0 0 24 24"><use href="#i-help"/></svg></button>
+      <span class="bar-sep"></span>
+      <select id="units-select" class="select" data-i18n-label="units.title" aria-label="units"></select>
+      <select id="theme-select" class="select" data-i18n-label="ui.theme" aria-label="Theme"></select>
+      <select id="lang-select" class="select" data-i18n-label="ui.language" aria-label="Language"></select>
+    </div>
+  </header>
+
+  <!-- ─────────────────────────── workspace ─────────────────────────── -->
+  <main class="workspace" id="workspace">
+    <aside class="sidebar left" id="sidebar-left">
+      <nav class="tabs" id="side-tabs" role="tablist">
+        <button data-tab="pages" role="tab" class="active"><svg class="icon" viewBox="0 0 24 24"><use href="#i-pages"/></svg><span data-i18n="tab.pages">Pages</span></button>
+        <button data-tab="text" role="tab"><svg class="icon" viewBox="0 0 24 24"><use href="#i-text"/></svg><span data-i18n="tab.text">Text</span></button>
+        <button data-tab="images" role="tab"><svg class="icon" viewBox="0 0 24 24"><use href="#i-image"/></svg><span data-i18n="tab.images">Images</span></button>
+        <button data-tab="layers" role="tab"><svg class="icon" viewBox="0 0 24 24"><use href="#i-layers"/></svg><span data-i18n="tab.layers">Layers</span></button>
+        <button data-tab="search" role="tab"><svg class="icon" viewBox="0 0 24 24"><use href="#i-search"/></svg><span data-i18n="tab.search">Search</span></button>
+        <button data-tab="fonts" role="tab"><svg class="icon" viewBox="0 0 24 24"><use href="#i-font"/></svg><span data-i18n="tab.fonts">Fonts</span></button>
+        <button data-tab="history" role="tab"><svg class="icon" viewBox="0 0 24 24"><use href="#i-history"/></svg><span data-i18n="tab.history">History</span></button>
+      </nav>
+      <div class="tab-panels">
+        <div class="panel active" data-panel="pages"></div>
+        <div class="panel" data-panel="text"></div>
+        <div class="panel" data-panel="images"></div>
+        <div class="panel" data-panel="layers"></div>
+        <div class="panel" data-panel="search"></div>
+        <div class="panel" data-panel="fonts"></div>
+        <div class="panel" data-panel="history"></div>
+      </div>
+      <div class="sidebar-foot">
+        <button class="btn btn-small" data-action="add-page"><svg class="icon" viewBox="0 0 24 24"><use href="#i-plus"/></svg><span data-i18n="pages.add">Add page</span></button>
+      </div>
+    </aside>
+
+    <div class="splitter" data-split="left" role="separator" aria-orientation="vertical"></div>
+
+    <section class="stage" id="stage">
+      <div class="viewport" id="viewport"></div>
+      <div class="dropzone" id="dropzone">
+        <div class="dropzone-inner">
+          <span class="dropzone-icon"><svg class="icon" viewBox="0 0 24 24"><use href="#i-upload"/></svg></span>
+          <h1 data-i18n="appName">HTML PDF Modifier</h1>
+          <p data-i18n="msg.dropFile">Drop a PDF here</p>
+          <div class="dropzone-actions">
+            <button class="btn primary big" data-action="open"><svg class="icon" viewBox="0 0 24 24"><use href="#i-open"/></svg><span data-i18n="open">Open PDF</span></button>
+            <button class="btn big" data-action="open-url"><svg class="icon" viewBox="0 0 24 24"><use href="#i-link"/></svg><span data-i18n="openUrl">From URL</span></button>
+          </div>
+          <ul class="dropzone-features">
+            <li><svg class="icon" viewBox="0 0 24 24"><use href="#i-text"/></svg><span data-i18n="feat.text">Edit any text</span></li>
+            <li><svg class="icon" viewBox="0 0 24 24"><use href="#i-image"/></svg><span data-i18n="feat.image">Replace images</span></li>
+            <li><svg class="icon" viewBox="0 0 24 24"><use href="#i-checkbox"/></svg><span data-i18n="feat.forms">Fillable forms</span></li>
+            <li><svg class="icon" viewBox="0 0 24 24"><use href="#i-globe"/></svg><span data-i18n="feat.languages">Every language</span></li>
+          </ul>
+          <p class="note" data-i18n="ui.hint"></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="splitter" data-split="right" role="separator" aria-orientation="vertical"></div>
+
+    <aside class="sidebar right" id="sidebar-right">
+      <div class="inspector-head"><span data-i18n="prop.inspector">Inspector</span></div>
+      <div class="inspector" id="inspector"></div>
+    </aside>
+  </main>
+
+  <!-- ─────────────────────────── status bar ─────────────────────────── -->
+  <footer class="statusbar">
+    <span class="status-chip" id="status-state"></span>
+    <span class="status-chip" id="status-page"></span>
+    <span class="status-chip" id="status-selection"></span>
+    <span class="spacer"></span>
+    <span class="status-chip dim" id="status-hint"></span>
+    <span class="status-chip dim" id="status-zoom"></span>
+    <span class="status-chip dim" id="status-saved"></span>
+  </footer>
+
+  <div class="busy" id="busy"><div class="spinner"></div><span id="busy-text"></span></div>
+  <div class="toast-stack" id="toast-stack"></div>
+  <div class="menu" id="context-menu" hidden></div>
+
+  <div class="modal" id="modal">
+    <div class="modal-box" role="dialog" aria-modal="true">
+      <header class="modal-head">
+        <h2 id="modal-title"></h2>
+        <button class="btn icon ghost" data-modal-cancel><svg class="icon" viewBox="0 0 24 24"><use href="#i-close"/></svg></button>
+      </header>
+      <div class="modal-body" id="modal-body"></div>
+      <footer class="modal-foot">
+        <button class="btn" data-modal-cancel data-i18n="msg.cancel">Cancel</button>
+        <button class="btn primary" data-modal-ok data-i18n="msg.ok">OK</button>
+      </footer>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="file-input" accept="application/pdf,.pdf" hidden>
+<input type="file" id="project-input" accept="application/json,.json" hidden>
+<input type="file" id="font-input" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf" hidden>
+<input type="file" id="image-input" accept="image/*" hidden>
+
+<script src="js/vendor/pdf.min.js"></script>
+<script src="js/vendor/pdf-lib.min.js"></script>
+<script src="js/vendor/fontkit.umd.min.js"></script>
+<script src="js/core/text.js"></script>
+<script src="js/core/ops.js"></script>
+<script src="js/core/exporter.js"></script>
+<script src="js/app/i18n.js"></script>
+<script src="js/app/icons.js"></script>
+<script src="js/app/units.js"></script>
+<script src="js/app/arrange.js"></script>
+<script src="js/app/fonts.js"></script>
+<script src="js/app/pdfsource.js"></script>
+<script src="js/app/viewer.js"></script>
+<script src="js/app/inspector.js"></script>
+<script src="js/app/dialogs.js"></script>
+<script src="js/app/main.js"></script>
+</body>
+</html>
